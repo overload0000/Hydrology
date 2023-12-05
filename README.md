@@ -6,6 +6,21 @@ Run the following command to install all the required packages:
 conda create -n hydrology python=3.8.8
 conda activate hydrology
 pip install -r requirements.txt
+unzip data_demo.zip
+```
+
+Please do the following unless you know what you are doing:
+```bash
+git checkout -b <your_name>
+```
+
+Download all the data from the following link and put them in the `data` folder:
+
+[温度数据：temp_data.pkl](https://cloud.tsinghua.edu.cn/f/6b3764f9659a4aa4a542/?dl=1)
+
+[降水数据：pcp_dat.pkl](https://cloud.tsinghua.edu.cn/f/197f0e300ee04b5da012/)
+
+After finishing the above, your folder structure should look like this:
 ```
 .
 ├── CMADS
@@ -47,19 +62,14 @@ pip install -r requirements.txt
 ├── primary.ipynb
 └── 开题.pdf
 ```
+
+
 ### 文件说明
 dataclean.ipynb: 清洗数据，生成pkl文件
 geology.ipynb: demo 地理绘图
 primary.py : demo 降水-温度关系图（主要工作）
 output: OLS回归结果
 pic : 图片输出 demo
-
-
-### 数据
-[温度数据：temp_data.pkl](https://cloud.tsinghua.edu.cn/f/6b3764f9659a4aa4a542/?dl=1)
-
-[降水数据：pcp_dat.pkl](https://cloud.tsinghua.edu.cn/f/197f0e300ee04b5da012/)
-
 
 
 ## 方法：raw
