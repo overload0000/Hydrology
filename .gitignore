@@ -4,3 +4,4 @@ CMIP6/
 中国气象站数据/
 data/
 .DS_Store
+__pycache__/

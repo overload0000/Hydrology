@@ -1,11 +1,15 @@
 import pandas as pd
 import numpy as np
 import os
+import re
+import logging
 from rich.progress import track
+from tqdm import tqdm
 from typing import List
 from matplotlib import pyplot as plt
 from statsmodels.formula.api import ols
 
+logger = logging.getLogger(__name__)
 
 def check_dir(dir):
     """
@@ -13,6 +17,29 @@ def check_dir(dir):
     """
     if not os.path.exists(dir):
         os.mkdir(dir)
+
+def extract_geo_data(
+    df: pd.DataFrame,
+    data_name: str,
+):
+    logger.info(f"extracting {data_name} data")
+    new_columns = df.columns.to_series().apply(lambda x: re.findall(r'\d+', x)).apply(lambda x: tuple(x))
+    df.columns = pd.MultiIndex.from_tuples(new_columns)
+    df = df.reset_index().melt(id_vars="index").set_index("index")
+    df = df.reset_index().rename(columns={"index": "time"})
+    df = df.rename(columns={"value": data_name, "variable_0": "LONG", "variable_1": "LAT"})
+    return df
+
+def merge_data(
+    dfs: List[pd.DataFrame],
+):
+    df = dfs[0]
+    logger.info(f"merging data")
+    # for i in track(range(1, len(dfs))):
+    for i in range(1, len(dfs)):
+        current = dfs[i]
+        df[current.columns[-1]] = current.iloc[:, -1]
+    return df
 
 
 def get_extreme_pcp(df: pd.DataFrame, threshold=0.95):

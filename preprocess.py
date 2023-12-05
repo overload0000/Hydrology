@@ -7,10 +7,7 @@ from tqdm import tqdm
 from scipy.stats import shapiro
 from .utils import check_dir
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-
+logger = logging.getLogger(__name__)
 
 def get_data_summary(
     filepath, min_longitude, max_longitude, min_latitude, max_latitude
@@ -26,7 +23,7 @@ def get_data_summary(
         max_latitude: the max latitude of the region
     """
     assert os.path.exists(filepath), f"{filepath} does not exist"
-    logging.info(f"get data summary from {filepath}")
+    logger.info(f"get data summary from {filepath}")
     df = pd.read_csv(filepath)
     df = df[
         (df["LONG"] <= max_longitude)
@@ -48,7 +45,7 @@ def get_raw_data(dir, file_list):
     assert os.path.exists(dir), f"{dir} does not exist"
     columns = np.array([])
 
-    logging.info(f"get raw data from {dir}")
+    logger.info(f"get raw data from {dir}")
     for file in track(file_list):
         filepath = os.path.join(dir, file) + ".txt"
         assert os.path.exists(filepath), f"{filepath} does not exist"
@@ -74,7 +71,7 @@ def clean_data(min_longitude, max_longitude, min_latitude, max_latitude, data_ty
         data_type: the type of the data(pcp or temp)
     """
     if not os.path.exists(f"data/{data_type}_data.pkl"):
-        logging.info(f"clean the {data_type} data")
+        logger.info(f"clean the {data_type} data")
         summary_filepath = f"./CMADS/For-swat-2012/Fork/{data_type.upper()}FORK.txt"
         summary = get_data_summary(
             summary_filepath, min_longitude, max_longitude, min_latitude, max_latitude
@@ -101,7 +98,7 @@ def check_yearly_log_normality(df: pd.DataFrame):
     Args:
         df: the data
     """
-    logging.info("check the log normality of the data")
+    logger.info("check the log normality of the data")
     df["year"] = df.index.year
     # tqdm.pandas("group by year")
     df_yearly_log = df.groupby("year").progress_apply(lambda x: np.log(x).sum())
