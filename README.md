@@ -1,7 +1,11 @@
 # Hydrology
 
-
-
+## Setup
+Run the following command to install all the required packages:
+```bash
+conda create -n hydrology python=3.8.8
+conda activate hydrology
+pip install -r requirements.txt
 ```
 .
 ├── CMADS
