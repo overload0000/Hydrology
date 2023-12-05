@@ -1,17 +1,17 @@
 # Hydrology
 
 ## Setup
+Please do the following unless you know what you are doing:
+```bash
+git checkout -b <your_name>
+```
+
 Run the following command to install all the required packages:
 ```bash
 conda create -n hydrology python=3.8.8
 conda activate hydrology
 pip install -r requirements.txt
 unzip data_demo.zip
-```
-
-Please do the following unless you know what you are doing:
-```bash
-git checkout -b <your_name>
 ```
 
 Download all the data from the following link and put them in the `data` folder:
