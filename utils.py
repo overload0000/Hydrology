@@ -23,6 +23,42 @@ def get_extreme_pcp(df: pd.DataFrame, threshold=0.95):
     return df.iloc[: int(df.shape[0] * (1 - threshold)), :]
 
 
+def split_data_by_pcp(
+    df: pd.DataFrame,
+    pcp_step: float
+):
+    """
+    split the data by precipitation
+    """
+    min_pcp = df["pcp"].min()
+    max_pcp = df["pcp"].max()
+
+    groups = []
+    for i in track(np.arange(min_pcp, max_pcp, pcp_step)):
+        groups.append(df[(df["pcp"] >= i) & (df["pcp"] < i + pcp_step)])
+
+    return groups
+
+def split_data_by_geo(
+    df: pd.DataFrame,
+    lon_step: float,
+    lat_step: float
+):
+    """
+    split the data by longitude and latitude
+    """
+    min_lon = df["LONG"].min()
+    max_lon = df["LONG"].max()
+    min_lat = df["LAT"].min()
+    max_lat = df["LAT"].max()
+
+    groups = []
+    for i in track(np.arange(min_lon, max_lon, lon_step)):
+        for j in track(np.arange(min_lat, max_lat, lat_step)):
+            groups.append(df[(df["LONG"] >= i) & (df["LONG"] < i + lon_step) & (df["LAT"] >= j) & (df["LAT"] < j + lat_step)])
+
+    return groups
+
 def get_percentiles(df: pd.DataFrame):
     """
     get the percentiles of the precipitation
@@ -47,11 +83,11 @@ def get_extreme_for_each_temp(
     drop the group with less than drop_threshold samples
     for each group, get the extreme precipitation for each threshold
     """
-    min = df["temp"].min()
-    max = df["temp"].max()
+    min_temp = df["temp"].min()
+    max_temp = df["temp"].max()
 
     groups = []
-    for i in track(np.arange(min, max, step)):
+    for i in track(np.arange(min_temp, max_temp, step)):
         groups.append(df[(df["temp"] >= i) & (df["temp"] < i + step)])
     groups = [group for group in groups if group.shape[0] >= drop_threshold]
 
