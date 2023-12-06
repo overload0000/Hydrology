@@ -1,0 +1,79 @@
+log regression
+epsilon = 0.001
+criterion = pcp_4000-4200
+threshold: 0
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                log_pcp   R-squared:                       0.437
+Model:                            OLS   Adj. R-squared:                  0.437
+Method:                 Least Squares   F-statistic:                 1.174e+05
+Date:                Wed, 06 Dec 2023   Prob (F-statistic):               0.00
+Time:                        10:54:22   Log-Likelihood:                -10660.
+No. Observations:              151558   AIC:                         2.132e+04
+Df Residuals:                  151556   BIC:                         2.134e+04
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      3.5504      0.003   1301.851      0.000       3.545       3.556
+temp           0.0394      0.000    342.645      0.000       0.039       0.040
+==============================================================================
+Omnibus:                    13423.644   Durbin-Watson:                   0.006
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):            17329.775
+Skew:                           0.790   Prob(JB):                         0.00
+Kurtosis:                       3.498   Cond. No.                         97.1
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.threshold: 1
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                log_pcp   R-squared:                       0.512
+Model:                            OLS   Adj. R-squared:                  0.512
+Method:                 Least Squares   F-statistic:                 7.953e+04
+Date:                Wed, 06 Dec 2023   Prob (F-statistic):               0.00
+Time:                        10:54:22   Log-Likelihood:                 3587.1
+No. Observations:               75771   AIC:                            -7170.
+Df Residuals:                   75769   BIC:                            -7152.
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      3.7005      0.003   1079.071      0.000       3.694       3.707
+temp           0.0408      0.000    282.004      0.000       0.041       0.041
+==============================================================================
+Omnibus:                     4308.222   Durbin-Watson:                   0.010
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5105.733
+Skew:                           0.607   Prob(JB):                         0.00
+Kurtosis:                       3.378   Cond. No.                         97.1
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.threshold: 2
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                log_pcp   R-squared:                       0.615
+Model:                            OLS   Adj. R-squared:                  0.615
+Method:                 Least Squares   F-statistic:                 2.420e+04
+Date:                Wed, 06 Dec 2023   Prob (F-statistic):               0.00
+Time:                        10:54:22   Log-Likelihood:                 5056.6
+No. Observations:               15135   AIC:                        -1.011e+04
+Df Residuals:                   15133   BIC:                        -1.009e+04
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      4.0951      0.006    709.698      0.000       4.084       4.106
+temp           0.0379      0.000    155.554      0.000       0.037       0.038
+==============================================================================
+Omnibus:                      291.585   Durbin-Watson:                   0.040
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              432.125
+Skew:                           0.215   Prob(JB):                     1.46e-94
+Kurtosis:                       3.708   Cond. No.                         97.3
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
