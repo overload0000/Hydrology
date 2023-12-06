@@ -27,41 +27,63 @@ After finishing the above, your folder structure should look like this:
 .
 ├── CMADS
 │   ├── CMADSV1.1_station
-│   │   ├── CMADS-area.dbf
-│   │   ├── CMADS-area.prj
-│   │   ├── CMADS-area.sbn
-│   │   ├── CMADS-area.sbx
-│   │   ├── CMADS-area.shp
-│   │   ├── CMADS-area.shp.xml
-│   │   ├── CMADS-area.shx
-│   │   ├── CMADS1.1.dbf
-│   │   ├── CMADS1.1.prj
-│   │   ├── CMADS1.1.sbn
-│   │   ├── CMADS1.1.sbx
-│   │   ├── CMADS1.1.shp
-│   │   ├── CMADS1.1.shx
-│   │   └── CMADSV1.1.mxd
 │   ├── CMADS_V1.1_Station_Information.xlsx
 │   ├── CMADS_V1.1_User_Guide(Chinese)_update-2018.pdf
 │   ├── For-swat-2012
-│   │   ├── Fork
-│   │   └── Station
 │   ├── reference
-│   │   ├── Hydrological Modeling in the Manas River Basin Using Soil and Water Assessment Tool Driven by CMADS.pdf
-│   │   ├── Investigating spatiotemporal changes of the land.pdf
-│   │   ├── The China Meteorological Assimilation Driving Datasets for the SWAT Model (CMADS) Application in China A Case Study in Heihe River Basin .pdf
-│   │   └── water-09-00765.pdf
 │   └── 中国轮廓
-│       └── 国界
 ├── README.md
+├── __init__.py
+├── archive
+│   ├── dataclean.ipynb
+│   ├── geology.ipynb
+│   ├── primary.ipynb
+│   └── primary.py
 ├── data
 │   ├── pcp_data.pkl
 │   └── temp_data.pkl
 ├── data_demo.zip
-├── data_preprocessing.py
-├── dataclean.ipynb
-├── geology.ipynb
-├── primary.ipynb
+├── main.py
+├── output
+│   ├── pcp_0-200log_regression.txt
+│   ├── pcp_1000-1200log_regression.txt
+│   ├── pcp_1200-1400log_regression.txt
+│   ├── pcp_1400-1600log_regression.txt
+│   ├── pcp_1600-1800log_regression.txt
+│   ├── pcp_1800-2000log_regression.txt
+│   ├── pcp_200-400log_regression.txt
+│   ├── pcp_2000-2200log_regression.txt
+│   ├── pcp_2200-2400log_regression.txt
+│   ├── pcp_2400-2600log_regression.txt
+│   ├── pcp_2600-2800log_regression.txt
+│   ├── pcp_2800-3000log_regression.txt
+│   ├── pcp_3000-3200log_regression.txt
+│   ├── pcp_3200-3400log_regression.txt
+│   ├── pcp_3400-3600log_regression.txt
+│   ├── pcp_3600-3800log_regression.txt
+│   ├── pcp_3800-4000log_regression.txt
+│   ├── pcp_400-600log_regression.txt
+│   ├── pcp_4000-4200log_regression.txt
+│   ├── pcp_4200-4400log_regression.txt
+│   ├── pcp_4400-4600log_regression.txt
+│   ├── pcp_4600-4800log_regression.txt
+│   ├── pcp_4800-5000log_regression.txt
+│   ├── pcp_5000-5200log_regression.txt
+│   ├── pcp_5200-5400log_regression.txt
+│   ├── pcp_5400-5600log_regression.txt
+│   ├── pcp_600-800log_regression.txt
+│   ├── pcp_800-1000log_regression.txt
+│   └── result_0.txt
+├── pic
+│   ├── extreme_pcp.png
+│   ├── extreme_pcp_log.png
+│   ├── extreme_pcp_percentile.png
+│   ├── extreme_pcp_percentile_log.png
+│   ├── temp_dist_90.png
+│   └── temp_dist_95.png
+├── preprocess.py
+├── requirements.txt
+├── utils.py
 └── 开题.pdf
 ```
 
