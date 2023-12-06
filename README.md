@@ -20,6 +20,8 @@ Download all the data from the following link and put them in the `data` folder:
 
 [降水数据：pcp_dat.pkl](https://cloud.tsinghua.edu.cn/f/197f0e300ee04b5da012/)
 
+[温度-降水-经纬度集成数据：gpt_data.pkl](https://cloud.tsinghua.edu.cn/f/3ce61db42f3f459cb3c3/?dl=1) (If nothing unexpected happens, you should use this data only for now)
+
 After finishing the above, your folder structure should look like this:
 ```
 .
@@ -64,12 +66,10 @@ After finishing the above, your folder structure should look like this:
 ```
 
 
-### 文件说明
-dataclean.ipynb: 清洗数据，生成pkl文件
-geology.ipynb: demo 地理绘图
-primary.py : demo 降水-温度关系图（主要工作）
-output: OLS回归结果
-pic : 图片输出 demo
+### Quick Onboard
+preprocess.py: preprocess the data, generate pkl files
+utils.py: some useful functions (TODO: hotmap API)
+main,py: generate the results
 
 
 ## 方法：raw
@@ -124,8 +124,6 @@ pic : 图片输出 demo
 1. 对于每个测站，在指定温度范围内，每隔0.5℃找到top5% percent；样本数量少，则采用随机数决定是否选取
 2. 线性回归，获得每个测站的$$\beta_1$$
 3. 以$$\beta_1$$作为y，以之前提取的特征（降水量特征（年均值，年际方差 etc.)、温度、地形特征）为X，做整体预测
-
-
 
 
 
