@@ -68,8 +68,10 @@ After finishing the above, your folder structure should look like this:
 
 ### Quick Onboard
 preprocess.py: preprocess the data, generate pkl files
+
 utils.py: some useful functions (TODO: hotmap API)
-main,py: generate the results
+
+main.py: generate the results
 
 
 ## 方法：raw
