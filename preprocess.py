@@ -1,9 +1,11 @@
+"""
+It's OK to ignore this file
+"""
 import pandas as pd
 import numpy as np
 import os
 import logging
 from rich.progress import track
-from tqdm import tqdm
 from scipy.stats import shapiro
 from .utils import check_dir
 

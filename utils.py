@@ -14,6 +14,9 @@ logger = logging.getLogger(__name__)
 def check_dir(dir):
     """
     check the directory
+
+    Args:
+        dir: the directory you want to use
     """
     if not os.path.exists(dir):
         os.mkdir(dir)
@@ -26,6 +29,10 @@ def extract_geo_data(
     """
     extract geo data from the dataframe
     it's OK you ignore this function
+
+    Args:
+        df: the dataframe
+        data_name: the name of the data
     """
     logger.info(f"extracting {data_name} data")
     new_columns = (
@@ -48,6 +55,9 @@ def merge_data(
     """
     merge the data
     it's OK you ignore this function
+
+    Args:
+        dfs: the list of the dataframe with the last column that you want to merge
     """
     df = dfs[0]
     logger.info("merging data")
@@ -60,6 +70,10 @@ def merge_data(
 def get_extreme_pcp(df: pd.DataFrame, threshold=0.95):
     """
     get the extreme precipitation for each threshold
+
+    Args:
+        df: the dataframe
+        threshold: the threshold of the extreme precipitation
     """
     df = df.sort_values(by="pcp", ascending=False)
     return df.iloc[: int(df.shape[0] * (1 - threshold)), :]
@@ -68,6 +82,10 @@ def get_extreme_pcp(df: pd.DataFrame, threshold=0.95):
 def split_data_by_pcp(df: pd.DataFrame, pcp_step: float):
     """
     split the data by precipitation
+
+    Args:
+        df: the dataframe(long format)
+        pcp_step: the step of the precipitation
     """
     min_pcp = df["pcp"].min()
     max_pcp = df["pcp"].max()
@@ -81,6 +99,11 @@ def split_data_by_pcp(df: pd.DataFrame, pcp_step: float):
 def split_data_by_geo(df: pd.DataFrame, lon_step: float, lat_step: float):
     """
     split the data by longitude and latitude
+
+    Args:
+        df: the dataframe(long format)
+        lon_step: the step of the longitude
+        lat_step: the step of the latitude
     """
     min_lon = df["LONG"].min()
     max_lon = df["LONG"].max()
@@ -109,6 +132,9 @@ def split_data_by_geo(df: pd.DataFrame, lon_step: float, lat_step: float):
 def get_percentiles(df: pd.DataFrame):
     """
     get the percentiles of the precipitation
+
+    Args:
+        df: the dataframe(long format)
     """
     length = df.shape[0]
     df = df.sort_values(by="temp")
@@ -130,6 +156,12 @@ def get_extreme_for_each_temp(
     group the data by temperature with a given step
     drop the group with less than drop_threshold samples
     for each group, get the extreme precipitation for each threshold
+
+    Args:
+        df: the dataframe(long format)
+        step: the step of the temperature
+        thresholds: the thresholds of the extreme precipitation
+        drop_threshold: the threshold of the number of samples
     """
     min_temp = df["temp"].min()
     max_temp = df["temp"].max()
@@ -165,6 +197,10 @@ def get_extreme_for_each_temp(
 def draw_avg_extreme_pcp(avg_extreme_pcps: List[pd.DataFrame], thresholds: List[float]):
     """
     draw the average extreme precipitation for each threshold
+
+    Args:
+        avg_extreme_pcps: the list of the average extreme precipitation
+        thresholds: the thresholds of the extreme precipitation
     """
     plt.figure(figsize=(12, 8))
     for i in range(len(avg_extreme_pcps)):
@@ -195,6 +231,10 @@ def draw_avg_extreme_pcp(avg_extreme_pcps: List[pd.DataFrame], thresholds: List[
 def draw_percentiles(extreme_pcps: List[pd.DataFrame], thresholds: List[float]):
     """
     draw the percentiles of the precipitation
+
+    Args:
+        extreme_pcps: the list of the extreme precipitation
+        thresholds: the thresholds of the extreme precipitation
     """
     temps = []
     pcps = []

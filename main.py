@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import logging
 from utils import *
 
@@ -12,6 +11,10 @@ logger = logging.getLogger(__name__)
 def pcp_split_regression(df: pd.DataFrame, pcp_bin: int):
     """
     split the data by precipitation
+
+    Args:
+        df: the dataframe
+        pcp_bin: the bin of precipitation
     """
     gpt_data_by_pcp_groups = split_data_by_pcp(df, pcp_bin)
 
@@ -26,6 +29,11 @@ def pcp_split_regression(df: pd.DataFrame, pcp_bin: int):
 def geo_split_regression(df: pd.DataFrame, lat_bin: int, lon_bin: int):
     """
     split the data by lat and lon
+
+    Args:
+        df: the dataframe
+        lat_bin: the bin of latitude
+        lon_bin: the bin of longitude
     """
     gpt_data_by_geo_groups = split_data_by_geo(df, lat_bin, lon_bin)
 
