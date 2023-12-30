@@ -7,6 +7,7 @@ from tqdm import tqdm, trange
 from typing import List
 from matplotlib import pyplot as plt
 from statsmodels.formula.api import ols
+from concurrent import futures
 
 logger = logging.getLogger(__name__)
 
@@ -76,7 +77,10 @@ def get_extreme_pcp(df: pd.DataFrame, threshold=0.95):
         threshold: the threshold of the extreme precipitation
     """
     df = df.sort_values(by="pcp", ascending=False)
-    return df.iloc[: int(df.shape[0] * (1 - threshold)), :]
+    # Get the number of samples that pcp > 0
+    num = df[df["pcp"] > 0].shape[0]
+    #return df.iloc[: int(df.shape[0] * (1 - threshold)), :]
+    return df.iloc[: int(num * (1 - threshold)), :]
 
 
 def split_data_by_pcp(df: pd.DataFrame, pcp_step: float):
@@ -105,6 +109,10 @@ def split_data_by_geo(df: pd.DataFrame, lon_step: float, lat_step: float):
         lon_step: the step of the longitude
         lat_step: the step of the latitude
     """
+    # convert the df["LONG"] and df["LAT"] from str to float
+    tqdm.pandas()
+    df["LONG"] = df["LONG"].apply(lambda x: float(x))
+    df["LAT"] = df["LAT"].apply(lambda x: float(x)) 
     min_lon = df["LONG"].min()
     max_lon = df["LONG"].max()
     min_lat = df["LAT"].min()
@@ -113,20 +121,72 @@ def split_data_by_geo(df: pd.DataFrame, lon_step: float, lat_step: float):
     groups = []
     logger.info("splitting data")
     for i in trange(
-        int((max_lon - min_lon) // lon_step * (max_lat - min_lat) // lat_step),
+        int((max_lon - min_lon) // lon_step ),
         leave=None,
     ):
-        for j in trange(int((max_lon - min_lon) // lon_step), leave=None):
+        for j in trange(int((max_lat - min_lat) // lat_step), leave=None):
             groups.append(
                 df[
-                    (df["LONG"] >= i)
-                    & (df["LONG"] < i + lon_step)
-                    & (df["LAT"] >= j)
-                    & (df["LAT"] < j + lat_step)
+                    (df["LONG"] >= min_lon + i*lon_step)
+                    & (df["LONG"] < min_lon + i*lon_step + lon_step)
+                    & (df["LAT"] >= min_lat + j*lat_step)
+                    & (df["LAT"] < min_lat + j*lat_step + lat_step)
                 ]
             )
 
     return groups
+
+def split_data_by_geo_parallel(df: pd.DataFrame, lon_step: float, lat_step: float, num_threads: int = 8):
+    """
+    split the data by longitude and latitude using parallel processing
+
+    Args:
+        df: the dataframe(long format)
+        lon_step: the step of the longitude
+        lat_step: the step of the latitude
+        num_threads: number of threads for parallel processing
+    """
+    tqdm.pandas()
+
+    df["LONG"] = df["LONG"].progress_apply(lambda x: float(x))
+    df["LAT"] = df["LAT"].progress_apply(lambda x: float(x)) 
+
+    min_lon, max_lon = df["LONG"].min(), df["LONG"].max()
+    min_lat, max_lat = df["LAT"].min(), df["LAT"].max()
+
+    groups = []
+    logger.info("splitting data")
+
+    def process_chunk(i, j):
+        return df[
+                    (df["LONG"] >= min_lon + i*lon_step)
+                    & (df["LONG"] < min_lon + i*lon_step + lon_step)
+                    & (df["LAT"] >= min_lat + j*lat_step)
+                    & (df["LAT"] < min_lat + j*lat_step + lat_step)
+        ]
+
+    with futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
+        tasks = []
+        for i in range(int((max_lon - min_lon) // lon_step )):
+            for j in range(int((max_lat - min_lat) // lat_step)):
+                tasks.append(executor.submit(process_chunk, i, j))
+        for future in tqdm(futures.as_completed(tasks), total=len(tasks)):
+            groups.append(future.result())
+
+    logger.info("splitted data")
+    # save the splitted data
+    os.makedirs(os.path.join("data", "geo"), exist_ok=True)
+    index = []        
+    geo_id = 0 
+    for i in range(len(groups)):
+        if groups[i].shape[0] > 0:
+            groups[i].to_pickle(os.path.join("data", "geo", f"geo_{geo_id}.pkl"))
+            geo_id += 1
+            index.append(i)
+        else:
+            logger.info(f"geo_{i} is empty")
+            continue
+    #return groups, index
 
 
 def get_percentiles(df: pd.DataFrame):
@@ -148,6 +208,11 @@ def get_percentiles(df: pd.DataFrame):
         pcps.append(curr["pcp"].mean())
     return temps, pcps
 
+def check_floatNaN(x):
+    if x != x:
+        return int(0)
+    else:
+        return x
 
 def get_extreme_for_each_temp(
     df: pd.DataFrame, step=0.5, thresholds=[0.9, 0.95, 0.99], drop_threshold=300
