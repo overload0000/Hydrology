@@ -22,6 +22,10 @@ Download all the data from the following link and put them in the `data` folder:
 
 [温度-降水-经纬度集成数据：gpt_data.pkl](https://cloud.tsinghua.edu.cn/f/3ce61db42f3f459cb3c3/?dl=1) (If nothing unexpected happens, you should use this data only for now)
 
+[经纬度划分数据：geo_*.pkl](https://cloud.tsinghua.edu.cn/f/99f7954851f04c5b8fd8/)
+
+[geo_log_regression_results:geo_*log_regression.txt](https://cloud.tsinghua.edu.cn/f/3ecb7e1f8fc84ff3a7b9/)
+
 After finishing the above, your folder structure should look like this:
 ```
 .
