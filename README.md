@@ -1,12 +1,15 @@
 # Hydrology
 
 ## Setup
+
 Please do the following unless you know what you are doing:
+
 ```bash
 git checkout -b <your_name>
 ```
 
 Run the following command to install all the required packages:
+
 ```bash
 conda create -n hydrology python=3.8.8
 conda activate hydrology
@@ -22,11 +25,12 @@ Download all the data from the following link and put them in the `data` folder:
 
 [温度-降水-经纬度集成数据：gpt_data.pkl](https://cloud.tsinghua.edu.cn/f/3ce61db42f3f459cb3c3/?dl=1) (If nothing unexpected happens, you should use this data only for now)
 
-[经纬度划分数据：geo_*.pkl](https://cloud.tsinghua.edu.cn/f/99f7954851f04c5b8fd8/)
+[经纬度划分数据：geo\_\*.pkl](https://cloud.tsinghua.edu.cn/f/99f7954851f04c5b8fd8/)
 
-[geo_log_regression_results:geo_*log_regression.txt](https://cloud.tsinghua.edu.cn/f/3ecb7e1f8fc84ff3a7b9/)
+[geo*log_regression_results:geo*\*log_regression.txt](https://cloud.tsinghua.edu.cn/f/3ecb7e1f8fc84ff3a7b9/)
 
 After finishing the above, your folder structure should look like this:
+
 ```
 .
 ├── CMADS
@@ -91,14 +95,13 @@ After finishing the above, your folder structure should look like this:
 └── 开题.pdf
 ```
 
-
 ### Quick Onboard
+
 preprocess.py: preprocess the data, generate pkl files
 
 utils.py: some useful functions (TODO: hotmap API)
 
 main.py: generate the results
-
 
 ## 方法：raw
 
@@ -106,52 +109,40 @@ main.py: generate the results
 
 选取时间：2008-2016
 
-选取地点：73-135°E，18-54°N，共35712个测站
+选取地点：73-135°E，18-54°N，共 35712 个测站
 
 #### 初步计划
 
 取消空间聚类、降维，
 
-
-
 提取该区域内降水量特征（年均值，年际方差 etc.）、温度、地形特征，后续可增加
-
 
 ##### 整体，不分区
 
 获取整个区域内的情况(已完成)
 
-
-
 ##### 以降水量为特征的方法
 
 1. 按提取的年降水量特征分区（0-200，200-400，400-800， 800-1600）
-2. 以0.5℃为一档，每档取90，95，99 percentile以上，删去300条数据以下的区间
+2. 以 0.5 摄氏度为一档，每档取 90，95，99 percentile 以上，删去 300 条数据以下的区间
 3. 对于每个分区，分析极端降水与温度的关系，绘图
-
 
 ##### 以地理位置为因子的方法
 
-1. 以 4 * 4 的地理位置对测站进行直接聚类，此时数据代表1°*1°的区域
+1. 以 4 * 4 的地理位置对测站进行直接聚类，此时数据代表 1°*1° 的区域
 
-2. $$9 \times 365 \times 16 = 52560$$条日频的降水和温度
+2. $9 \times 365 \times 16 = 52560$ 条日频的降水和温度
 
-3. 以0.5℃为一档，每档取90，95，99 percentile以上，删去300条数据以下的区间
+3. 以 0.5 摄氏度为一档，每档取 90，95，99 percentile 以上，删去 300 条数据以下的区间
 
 4. 对于每个点，线性回归；绘制地图
 
-
-
-
 ##### 重复可获得以海拔、年均温、等其他特征为因子的极端降水与温度关系
 
+#### 对温度-降水回归因子 $\beta_1$ 影响因素定量分析：
 
+（这部分 1 和 2 已经做完 by zhengyi，结果在 output/per_station_analysis.csv ）
 
-#### 对温度-降水回归因子$$\beta_1$$影响因素定量分析：
-
-1. 对于每个测站，在指定温度范围内，每隔0.5℃找到top5% percent；样本数量少，则采用随机数决定是否选取
-2. 线性回归，获得每个测站的$$\beta_1$$
-3. 以$$\beta_1$$作为y，以之前提取的特征（降水量特征（年均值，年际方差 etc.)、温度、地形特征）为X，做整体预测
-
-
-
+1. 对于每个测站，在指定温度范围内，每隔 1 摄氏度找到 top5% percent；样本数量少，则采用随机数决定是否选取
+2. 线性回归，获得每个测站的 $\beta_1$
+3. 以 $\beta_1$ 作为 y，以之前提取的特征（降水量特征（年均值，年际方差 etc.)、温度、地形特征）为 X，做整体预测
