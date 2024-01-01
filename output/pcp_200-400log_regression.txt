@@ -4,82 +4,76 @@ criterion = pcp_200-400
 threshold: 0
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                log_pcp   R-squared:                       0.039
-Model:                            OLS   Adj. R-squared:                  0.035
-Method:                 Least Squares   F-statistic:                     9.152
-Date:                Mon, 01 Jan 2024   Prob (F-statistic):            0.00277
-Time:                        21:53:00   Log-Likelihood:                 229.80
-No. Observations:                 227   AIC:                            -455.6
-Df Residuals:                     225   BIC:                            -448.8
+Dep. Variable:                log_pcp   R-squared:                       0.130
+Model:                            OLS   Adj. R-squared:                  0.130
+Method:                 Least Squares   F-statistic:                 7.656e+04
+Date:                Mon, 01 Jan 2024   Prob (F-statistic):               0.00
+Time:                        23:26:51   Log-Likelihood:            -3.3079e+05
+No. Observations:              512087   AIC:                         6.616e+05
+Df Residuals:                  512085   BIC:                         6.616e+05
 Df Model:                           1                                         
 Covariance Type:            nonrobust                                         
 ==============================================================================
                  coef    std err          t      P>|t|      [0.025      0.975]
 ------------------------------------------------------------------------------
-Intercept      5.1105      0.229     22.327      0.000       4.659       5.562
-temp           0.0251      0.008      3.025      0.003       0.009       0.042
+Intercept      3.0912      0.003   1153.429      0.000       3.086       3.096
+temp           0.0308      0.000    276.693      0.000       0.031       0.031
 ==============================================================================
-Omnibus:                       26.050   Durbin-Watson:                   0.102
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):               11.586
-Skew:                           0.345   Prob(JB):                      0.00305
-Kurtosis:                       2.135   Cond. No.                     1.08e+03
+Omnibus:                    24933.447   Durbin-Watson:                   0.002
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):            32104.024
+Skew:                           0.495   Prob(JB):                         0.00
+Kurtosis:                       3.726   Cond. No.                         100.
 ==============================================================================
 
 Notes:
-[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-[2] The condition number is large, 1.08e+03. This might indicate that there are
-strong multicollinearity or other numerical problems.threshold: 1
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.threshold: 1
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                log_pcp   R-squared:                       0.034
-Model:                            OLS   Adj. R-squared:                  0.025
-Method:                 Least Squares   F-statistic:                     3.890
-Date:                Mon, 01 Jan 2024   Prob (F-statistic):             0.0511
-Time:                        21:53:00   Log-Likelihood:                 151.97
-No. Observations:                 112   AIC:                            -299.9
-Df Residuals:                     110   BIC:                            -294.5
+Dep. Variable:                log_pcp   R-squared:                       0.243
+Model:                            OLS   Adj. R-squared:                  0.243
+Method:                 Least Squares   F-statistic:                 8.204e+04
+Date:                Mon, 01 Jan 2024   Prob (F-statistic):               0.00
+Time:                        23:26:51   Log-Likelihood:            -1.2403e+05
+No. Observations:              256026   AIC:                         2.481e+05
+Df Residuals:                  256024   BIC:                         2.481e+05
 Df Model:                           1                                         
 Covariance Type:            nonrobust                                         
 ==============================================================================
                  coef    std err          t      P>|t|      [0.025      0.975]
 ------------------------------------------------------------------------------
-Intercept      5.4154      0.232     23.300      0.000       4.955       5.876
-temp           0.0166      0.008      1.972      0.051   -8.07e-05       0.033
+Intercept      3.2264      0.003   1000.181      0.000       3.220       3.233
+temp           0.0384      0.000    286.428      0.000       0.038       0.039
 ==============================================================================
-Omnibus:                        7.180   Durbin-Watson:                   0.207
-Prob(Omnibus):                  0.028   Jarque-Bera (JB):                3.145
-Skew:                          -0.064   Prob(JB):                        0.208
-Kurtosis:                       2.189   Cond. No.                     1.08e+03
+Omnibus:                    14162.233   Durbin-Watson:                   0.005
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):            19188.175
+Skew:                           0.521   Prob(JB):                         0.00
+Kurtosis:                       3.845   Cond. No.                         100.
 ==============================================================================
 
 Notes:
-[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-[2] The condition number is large, 1.08e+03. This might indicate that there are
-strong multicollinearity or other numerical problems.threshold: 2
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.threshold: 2
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                log_pcp   R-squared:                       0.081
-Model:                            OLS   Adj. R-squared:                  0.033
-Method:                 Least Squares   F-statistic:                     1.678
-Date:                Mon, 01 Jan 2024   Prob (F-statistic):              0.211
-Time:                        21:53:00   Log-Likelihood:                 51.677
-No. Observations:                  21   AIC:                            -99.35
-Df Residuals:                      19   BIC:                            -97.26
+Dep. Variable:                log_pcp   R-squared:                       0.443
+Model:                            OLS   Adj. R-squared:                  0.443
+Method:                 Least Squares   F-statistic:                 4.068e+04
+Date:                Mon, 01 Jan 2024   Prob (F-statistic):               0.00
+Time:                        23:26:51   Log-Likelihood:                -12151.
+No. Observations:               51188   AIC:                         2.431e+04
+Df Residuals:                   51186   BIC:                         2.432e+04
 Df Model:                           1                                         
 Covariance Type:            nonrobust                                         
 ==============================================================================
                  coef    std err          t      P>|t|      [0.025      0.975]
 ------------------------------------------------------------------------------
-Intercept      5.7139      0.186     30.778      0.000       5.325       6.102
-temp           0.0087      0.007      1.295      0.211      -0.005       0.023
+Intercept      3.5515      0.006    629.969      0.000       3.540       3.563
+temp           0.0472      0.000    201.700      0.000       0.047       0.048
 ==============================================================================
-Omnibus:                        1.089   Durbin-Watson:                   0.686
-Prob(Omnibus):                  0.580   Jarque-Bera (JB):                0.889
-Skew:                          -0.465   Prob(JB):                        0.641
-Kurtosis:                       2.613   Cond. No.                     1.08e+03
+Omnibus:                     3391.505   Durbin-Watson:                   0.023
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5873.798
+Skew:                           0.508   Prob(JB):                         0.00
+Kurtosis:                       4.312   Cond. No.                         100.
 ==============================================================================
 
 Notes:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-[2] The condition number is large, 1.08e+03. This might indicate that there are
-strong multicollinearity or other numerical problems.

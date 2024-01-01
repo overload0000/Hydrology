@@ -8,6 +8,7 @@ from typing import List
 from matplotlib import pyplot as plt
 from statsmodels.formula.api import ols
 from concurrent import futures
+from collections import defaultdict
 
 logger = logging.getLogger(__name__)
 
@@ -97,9 +98,58 @@ def split_data_by_pcp(df: pd.DataFrame, pcp_step: float):
     groups = []
     # for i in trange(int((max_pcp - min_pcp) // pcp_step), leave=False):
     #     groups.append(df[(df["pcp"] >= i) & (df["pcp"] < i + pcp_step)])
-    groups.append(df[df["pcp"] < min_pcp + pcp_step])
-    for i in trange(int(np.log2((max_pcp-min_pcp)/pcp_step)) + 1, leave=False):
-        groups.append(df[(df["pcp"] >= min_pcp + pcp_step * 2 ** i) & (df["pcp"] < min_pcp + pcp_step * 2 ** (i + 1))])
+    # groups.append(df[df["pcp"] < min_pcp + pcp_step])
+    # for i in trange(int(np.log2((max_pcp-min_pcp)/pcp_step)) + 1, leave=False):
+    #     groups.append(df[(df["pcp"] >= min_pcp + pcp_step * 2 ** i) & (df["pcp"] < min_pcp + pcp_step * 2 ** (i + 1))])
+    df.sort_values(by=["LONG", "LAT"], inplace=True)
+    grouped = df.groupby(["LONG", "LAT"])
+
+    year_mean_dictionary = defaultdict(list)
+    for name, group in grouped:
+        year_mean = group["pcp"].sum() / 8
+        for i in range(int(np.log2((max_pcp-min_pcp)/pcp_step)) + 1, leave = False):
+            if year_mean >= min_pcp + pcp_step * 2 ** i and year_mean < min_pcp + pcp_step * 2 ** (i + 1):
+                year_mean_dictionary[i].append(name)
+                break
+
+    for key, value in year_mean_dictionary.items():
+        temp_group = pd.DataFrame()
+        for i in value:
+            temp_group = pd.concat([temp_group, grouped.get_group(i)])
+        groups.append(temp_group)
+
+    return groups
+
+def split_data_by_pcp(df: pd.DataFrame, pcp_step: float):
+    """
+    split the data by precipitation
+
+    Args:
+        df: the dataframe(long format)
+        pcp_step: the step of the precipitation
+    """
+    min_pcp = df["pcp"].min()
+    max_pcp = df["pcp"].max()
+    logger.info("splitting data")
+    groups = []
+    df.sort_values(by=["LONG", "LAT"], inplace=True)
+    grouped = df.groupby(["LONG", "LAT"])
+
+    year_mean_dictionary = defaultdict(list)
+    for name, group in grouped:
+        year_mean = group["pcp"].sum() / 8
+        if year_mean < min_pcp + pcp_step:
+            year_mean_dictionary[0].append(name)
+            continue
+        for i in range(int(np.log2((max_pcp-min_pcp)/pcp_step)) + 1):
+            if year_mean >= min_pcp + pcp_step * 2 ** i and year_mean < min_pcp + pcp_step * 2 ** (i + 1):
+                year_mean_dictionary[i+1].append(name)
+                break
+    for key, value in year_mean_dictionary.items():
+        temp_group = []
+        for i in value:
+            temp_group.append(grouped.get_group(i))
+        groups.append(pd.concat(temp_group))
 
     return groups
 
@@ -264,7 +314,7 @@ def get_extreme_for_each_temp(
     return extreme_pcps, avg_extreme_pcps
 
 
-def draw_avg_extreme_pcp(avg_extreme_pcps: List[pd.DataFrame], thresholds: List[float]):
+def draw_avg_extreme_pcp(avg_extreme_pcps: List[pd.DataFrame], thresholds: List[float], name: str):
     """
     draw the average extreme precipitation for each threshold
 
@@ -280,7 +330,7 @@ def draw_avg_extreme_pcp(avg_extreme_pcps: List[pd.DataFrame], thresholds: List[
             label=f"{thresholds[i]*100}%",
         )
     plt.legend()
-    plt.savefig(os.path.join("pic", "extreme_pcp.png"))
+    plt.savefig(os.path.join("pic", "extreme_pcp" + name + ".png"))
 
     plt.figure(figsize=(12, 8))
     for i in range(len(avg_extreme_pcps)):
@@ -295,7 +345,7 @@ def draw_avg_extreme_pcp(avg_extreme_pcps: List[pd.DataFrame], thresholds: List[
     for i in range(6):
         plt.plot(x, 0.07 * x + i, color="grey", alpha=0.5)
     plt.legend()
-    plt.savefig(os.path.join("pic", "extreme_pcp_log.png"))
+    plt.savefig(os.path.join("pic", "extreme_pcp_log" + name + ".png"))
 
 
 def draw_percentiles(extreme_pcps: List[pd.DataFrame], thresholds: List[float]):

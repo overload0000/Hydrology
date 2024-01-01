@@ -24,7 +24,7 @@ def pcp_split_regression(df: pd.DataFrame, pcp_bin: int):
     ):
         extreme_pcps, avg_extreme_pcps = get_extreme_for_each_temp(group)
         log_linear_regression(extreme_pcps, f"pcp_{i * pcp_bin}-{(i + 1) * pcp_bin}")
-
+        draw_avg_extreme_pcp(avg_extreme_pcps, [0.90, 0.95, 0.99], f"pcp_{i * pcp_bin}-{(i + 1) * pcp_bin}")
 
 def geo_split(df: pd.DataFrame, lat_bin: int, lon_bin: int):
     """
