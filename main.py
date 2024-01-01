@@ -41,15 +41,23 @@ def geo_split(df: pd.DataFrame, lat_bin: int, lon_bin: int):
 
 def geo_split_regression():
     logger.info("getting extreme precipitation and run log linear regression")
-    for i in tqdm(range(13, 20)):
+    results = []
+    for i in tqdm(range(2134)):
         group = pd.read_pickle(f"data\\geo\\geo_{i}.pkl")
+        lon = group["LONG"].mean()
+        lat = group["LAT"].mean()
         try:
             extreme_pcps, avg_extreme_pcps = get_extreme_for_each_temp(group)
-            log_linear_regression(extreme_pcps, f"geo_{i}")
+            #log_linear_regression(extreme_pcps, f"geo_{i}")
+            log_linear_regression_w(extreme_pcps, f"geo_{i}", lon, lat, results)
         except Exception as e:
             print(f"error in geo_{i}")
             logger.error(e)
             continue
+    df = pd.DataFrame(results)
+    df.columns = ["ID","LONG","LAT","threshold","beta"]
+    df.to_csv("output/geo_regression.csv")
+    
 
 
 def per_station_analysis(gpt_data: pd.DataFrame, save_name, temp_bin: int = 1):
@@ -91,6 +99,7 @@ def per_station_analysis(gpt_data: pd.DataFrame, save_name, temp_bin: int = 1):
 
 if __name__ == "__main__":
     logger.info("loading data")
-    gpt_data = pd.read_pickle("data/gpt_data.pkl")
+    #gpt_data = pd.read_pickle("data/gpt_data.pkl")
     logger.info("splitting data by precipitation and apply log linear regression")
-    per_station_analysis(gpt_data, "output/per_station_analysis.csv")
+    #per_station_analysis(gpt_data, "output/per_station_analysis.csv")
+    geo_split_regression()

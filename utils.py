@@ -351,5 +351,38 @@ def log_linear_regression(extreme_pcps: List[pd.DataFrame], name: str, epsilon=1
             ]
 
             model = ols("log_pcp ~ temp", data=extreme_pcp).fit()
-            f.write(f"threshold: {i}\n")
+            f.write(f"threshold: {0.9+i*0.05}\n")
             f.write(model.summary().as_text())
+
+def log_linear_regression_w(extreme_pcps: List[pd.DataFrame], name: str, lon, lat, result, epsilon=1e-3):
+    """
+    run log linear regression and write the result to file
+
+    Args:
+        extreme_pcps: list of extreme precipitation for each threshold
+        name: name of the regression
+        lon: longitude
+        lat: latitude
+        epsilon: epsilon for log to avoid log(0)
+    """ 
+    logger.info("log regression")
+    for i in trange(len(extreme_pcps), leave=None):
+        extreme_pcp = extreme_pcps[i]
+        extreme_pcp["log_pcp"] = np.log(extreme_pcp["pcp"] + epsilon)
+
+        extreme_pcp = extreme_pcp[
+            extreme_pcp["temp"] > extreme_pcp["temp"].quantile(0.01)
+        ]
+        extreme_pcp = extreme_pcp[
+            extreme_pcp["temp"] < extreme_pcp["temp"].quantile(0.99)
+        ]
+
+        model = ols("log_pcp ~ temp", data=extreme_pcp).fit()
+        if i == 0:
+            threshold = 0.9
+        elif i == 1:
+            threshold = 0.95
+        else:
+            threshold = 0.99
+        result.append([name, lon, lat, threshold, model.params["temp"]])
+    
