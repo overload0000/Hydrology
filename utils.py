@@ -95,8 +95,12 @@ def split_data_by_pcp(df: pd.DataFrame, pcp_step: float):
     max_pcp = df["pcp"].max()
     logger.info("splitting data")
     groups = []
-    for i in trange(int((max_pcp - min_pcp) // pcp_step), leave=False):
-        groups.append(df[(df["pcp"] >= i) & (df["pcp"] < i + pcp_step)])
+    # for i in trange(int((max_pcp - min_pcp) // pcp_step), leave=False):
+    #     groups.append(df[(df["pcp"] >= i) & (df["pcp"] < i + pcp_step)])
+    groups.append(df[df["pcp"] < min_pcp + pcp_step])
+    for i in trange(int(np.log2((max_pcp-min_pcp)/pcp_step)) + 1, leave=False):
+        groups.append(df[(df["pcp"] >= min_pcp + pcp_step * 2 ** i) & (df["pcp"] < min_pcp + pcp_step * 2 ** (i + 1))])
+
     return groups
 
 
@@ -252,9 +256,10 @@ def get_extreme_for_each_temp(
         for i in tqdm(range(len(extreme_pcp)), leave=None):
             avg_extreme_pcp.append(extreme_pcp[i][["pcp", "temp"]].mean())
 
-        avg_extreme_pcps.append(pd.concat(avg_extreme_pcp))
-
-        extreme_pcps.append(pd.concat(extreme_pcp))
+        if len(avg_extreme_pcp) > 0:
+            avg_extreme_pcps.append(pd.concat(avg_extreme_pcp))
+        if len(extreme_pcp) > 0:
+            extreme_pcps.append(pd.concat(extreme_pcp))
 
     return extreme_pcps, avg_extreme_pcps
 

@@ -4,75 +4,75 @@ criterion = pcp_0-200
 threshold: 0
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                log_pcp   R-squared:                       0.421
-Model:                            OLS   Adj. R-squared:                  0.421
-Method:                 Least Squares   F-statistic:                 3.172e+06
-Date:                Wed, 06 Dec 2023   Prob (F-statistic):               0.00
-Time:                        10:51:41   Log-Likelihood:            -4.1374e+06
-No. Observations:             4369560   AIC:                         8.275e+06
-Df Residuals:                 4369558   BIC:                         8.275e+06
+Dep. Variable:                log_pcp   R-squared:                       0.555
+Model:                            OLS   Adj. R-squared:                  0.555
+Method:                 Least Squares   F-statistic:                 2.324e+06
+Date:                Mon, 01 Jan 2024   Prob (F-statistic):               0.00
+Time:                        21:53:00   Log-Likelihood:            -1.1103e+06
+No. Observations:             1864547   AIC:                         2.221e+06
+Df Residuals:                 1864545   BIC:                         2.221e+06
 Df Model:                           1                                         
 Covariance Type:            nonrobust                                         
 ==============================================================================
                  coef    std err          t      P>|t|      [0.025      0.975]
 ------------------------------------------------------------------------------
-Intercept      1.6234      0.001   2406.958      0.000       1.622       1.625
-temp           0.0606    3.4e-05   1780.926      0.000       0.061       0.061
+Intercept      2.2278      0.001   2919.167      0.000       2.226       2.229
+temp           0.0583   3.83e-05   1524.533      0.000       0.058       0.058
 ==============================================================================
-Omnibus:                   102846.749   Durbin-Watson:                   0.001
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):           110313.035
-Skew:                           0.383   Prob(JB):                         0.00
-Kurtosis:                       3.141   Cond. No.                         44.9
+Omnibus:                   151085.768   Durbin-Watson:                   0.001
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):           192185.492
+Skew:                           0.740   Prob(JB):                         0.00
+Kurtosis:                       3.531   Cond. No.                         47.5
 ==============================================================================
 
 Notes:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.threshold: 1
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                log_pcp   R-squared:                       0.547
-Model:                            OLS   Adj. R-squared:                  0.547
-Method:                 Least Squares   F-statistic:                 2.639e+06
-Date:                Wed, 06 Dec 2023   Prob (F-statistic):               0.00
-Time:                        10:51:42   Log-Likelihood:            -1.5040e+06
-No. Observations:             2184699   AIC:                         3.008e+06
-Df Residuals:                 2184697   BIC:                         3.008e+06
+Dep. Variable:                log_pcp   R-squared:                       0.644
+Model:                            OLS   Adj. R-squared:                  0.644
+Method:                 Least Squares   F-statistic:                 1.689e+06
+Date:                Mon, 01 Jan 2024   Prob (F-statistic):               0.00
+Time:                        21:53:00   Log-Likelihood:            -3.8197e+05
+No. Observations:              932278   AIC:                         7.639e+05
+Df Residuals:                  932276   BIC:                         7.640e+05
 Df Model:                           1                                         
 Covariance Type:            nonrobust                                         
 ==============================================================================
                  coef    std err          t      P>|t|      [0.025      0.975]
 ------------------------------------------------------------------------------
-Intercept      2.0918      0.001   2839.505      0.000       2.090       2.093
-temp           0.0604   3.72e-05   1624.644      0.000       0.060       0.060
+Intercept      2.5529      0.001   2848.167      0.000       2.551       2.555
+temp           0.0584   4.49e-05   1299.480      0.000       0.058       0.058
 ==============================================================================
-Omnibus:                    95421.839   Durbin-Watson:                   0.001
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):           111178.893
-Skew:                           0.506   Prob(JB):                         0.00
-Kurtosis:                       3.444   Cond. No.                         44.9
+Omnibus:                    90183.062   Durbin-Watson:                   0.002
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):           122645.590
+Skew:                           0.798   Prob(JB):                         0.00
+Kurtosis:                       3.780   Cond. No.                         47.5
 ==============================================================================
 
 Notes:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.threshold: 2
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                log_pcp   R-squared:                       0.715
-Model:                            OLS   Adj. R-squared:                  0.715
-Method:                 Least Squares   F-statistic:                 1.097e+06
-Date:                Wed, 06 Dec 2023   Prob (F-statistic):               0.00
-Time:                        10:51:42   Log-Likelihood:            -1.2774e+05
-No. Observations:              436939   AIC:                         2.555e+05
-Df Residuals:                  436937   BIC:                         2.555e+05
+Dep. Variable:                log_pcp   R-squared:                       0.760
+Model:                            OLS   Adj. R-squared:                  0.760
+Method:                 Least Squares   F-statistic:                 5.915e+05
+Date:                Mon, 01 Jan 2024   Prob (F-statistic):               0.00
+Time:                        21:53:00   Log-Likelihood:                -17819.
+No. Observations:              186432   AIC:                         3.564e+04
+Df Residuals:                  186430   BIC:                         3.566e+04
 Df Model:                           1                                         
 Covariance Type:            nonrobust                                         
 ==============================================================================
                  coef    std err          t      P>|t|      [0.025      0.975]
 ------------------------------------------------------------------------------
-Intercept      2.8247      0.001   2548.098      0.000       2.823       2.827
-temp           0.0586   5.59e-05   1047.195      0.000       0.058       0.059
+Intercept      3.1355      0.001   2141.418      0.000       3.133       3.138
+temp           0.0564   7.34e-05    769.081      0.000       0.056       0.057
 ==============================================================================
-Omnibus:                    30372.128   Durbin-Watson:                   0.004
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):            40661.265
-Skew:                           0.621   Prob(JB):                         0.00
-Kurtosis:                       3.832   Cond. No.                         44.9
+Omnibus:                    19318.114   Durbin-Watson:                   0.008
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):            29096.996
+Skew:                           0.782   Prob(JB):                         0.00
+Kurtosis:                       4.140   Cond. No.                         47.5
 ==============================================================================
 
 Notes:

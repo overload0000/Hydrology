@@ -92,5 +92,8 @@ def per_station_analysis(gpt_data: pd.DataFrame, save_name, temp_bin: int = 1):
 if __name__ == "__main__":
     logger.info("loading data")
     gpt_data = pd.read_pickle("data/gpt_data.pkl")
-    logger.info("splitting data by precipitation and apply log linear regression")
-    per_station_analysis(gpt_data, "output/per_station_analysis.csv")
+    # logger.info("splitting data by precipitation and apply log linear regression")
+    # per_station_analysis(gpt_data, "output/per_station_analysis.csv")
+
+    # logger.info("splitting data by precipitation and apply log linear regression")
+    pcp_split_regression(gpt_data, 200)
