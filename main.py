@@ -52,7 +52,9 @@ def geo_split_regression():
             continue
 
 
-def per_station_analysis(gpt_data: pd.DataFrame, save_name, temp_bin: int = 1):
+def per_station_analysis(
+    gpt_data: pd.DataFrame, save_name, summary_name, temp_bin: int = 1
+):
     """
     对于每个测站，在指定温度范围内，每隔1度找到top5% percent
     线性回归，获得每个测站的 beta_1 作为y，以之前提取的特征（降水量特征（年均值，年际方差 etc.)、温度、地形特征）为X，做整体预测
@@ -64,12 +66,19 @@ def per_station_analysis(gpt_data: pd.DataFrame, save_name, temp_bin: int = 1):
     gpt_data.sort_values(by=["LONG", "LAT"], inplace=True)
     grouped = gpt_data.groupby(["LONG", "LAT"])
 
+    x_list = []
+    beta_list = []
     with open(save_name, "w") as f:
         f.write("LONG,LAT,beta_1\n")
         for name, group in grouped:
             logger.info("-----------long: {}, lat: {}".format(name[0], name[1]))
             min_temp = group["temp"].min()
             max_temp = group["temp"].max()
+            year_mean_temp = group["temp"].mean()
+            year_std_temp = group["temp"].std()
+            year_mean_pcp = group["pcp"].mean()
+            year_std_pcp = group["pcp"].std()
+            x_list.append([year_mean_temp, year_std_temp, year_mean_pcp, year_std_pcp])
             # 对于每个测站，从最小温度到最大温度，每隔1度，在区间中提取降水top5%的数据（0.5度太小数据不够）
             # 然后用线性回归：log(降水)对温度回归，得到的beta添加到beta_list中
             sub_df_by_temp_list = []
@@ -86,7 +95,25 @@ def per_station_analysis(gpt_data: pd.DataFrame, save_name, temp_bin: int = 1):
             )  # avoid log(0)
             # linear regression pandas ols
             lm = ols("logpcp ~ temp", data=sub_df_by_temp_list).fit()
+            beta_list.append(lm.params[1])
             f.write("{},{},{}\n".format(name[0], name[1], lm.params[1]))
+        # regress beta on x_list
+        x_df = pd.DataFrame(
+            x_list,
+            columns=[
+                "year_mean_temp",
+                "year_std_temp",
+                "year_mean_pcp",
+                "year_std_pcp",
+            ],
+        )
+        y_df = pd.DataFrame(beta_list, columns=["beta_1"])
+        lm_1 = ols(
+            "beta_1 ~ year_mean_temp + year_std_temp + year_mean_pcp + year_std_pcp",
+            data=pd.concat([x_df, y_df], axis=1),
+        ).fit()
+        with open(summary_name, "w") as f1:
+            f1.write(lm_1.summary().as_text())
 
 
 if __name__ == "__main__":
